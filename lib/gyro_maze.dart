@@ -41,6 +41,9 @@ class _GyroMazeState extends State<GyroMaze> {
                 width: MediaQuery.of(context).size.width * 0.2,
                 child: GestureDetector(
                   child: ArrowPad(
+                    innerColor: const Color.fromARGB(255, 54, 52, 52),
+                    outerColor: const Color.fromARGB(55, 208, 187, 187),
+                    iconColor: const Color.fromARGB(200, 224, 223, 223),
                     onPressedUp: () => _game.ballDirection = Direction.up,
                     onPressedDown: () => _game.ballDirection = Direction.down,
                     onPressedLeft: () => _game.ballDirection = Direction.left,
