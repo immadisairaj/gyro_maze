@@ -1,6 +1,8 @@
+import 'package:arrow_pad/arrow_pad.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:gyro_maze/game/gyro_maze_game.dart';
+import 'package:gyro_maze/utils/direction.dart';
 
 /// main game for the application
 class GyroMaze extends StatefulWidget {
@@ -25,8 +27,29 @@ class _GyroMazeState extends State<GyroMaze> {
     return Scaffold(
       backgroundColor: Colors.grey[300],
       body: SafeArea(
-        child: GameWidget(
-          game: _game,
+        child: Stack(
+          children: [
+            Positioned.fill(
+              child: GameWidget(
+                game: _game,
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height * 0.5,
+                width: MediaQuery.of(context).size.width * 0.2,
+                child: GestureDetector(
+                  child: ArrowPad(
+                    onPressedUp: () => _game.ballDirection = Direction.up,
+                    onPressedDown: () => _game.ballDirection = Direction.down,
+                    onPressedLeft: () => _game.ballDirection = Direction.left,
+                    onPressedRight: () => _game.ballDirection = Direction.right,
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
