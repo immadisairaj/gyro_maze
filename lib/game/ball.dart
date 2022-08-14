@@ -77,6 +77,7 @@ class Ball extends SpriteComponent with CollisionCallbacks {
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollision(intersectionPoints, other);
     if (other is Wall) {
+      // TODO: fix the ball passing through the walls
       final interT = (other.position - position) / 2;
       final penX = other.size.x / 2 + size.x / 2 - interT.x.abs();
       final penY = other.size.y / 2 + size.y / 2 - interT.y.abs();
