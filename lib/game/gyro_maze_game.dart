@@ -18,7 +18,7 @@ class GyroMazeGame extends FlameGame
   // bool get debugMode => true;
 
   @override
-  Color backgroundColor() => const Color.fromARGB(255, 37, 36, 36);
+  Color backgroundColor() => const Color.fromARGB(255, 28, 27, 27);
 
   /// number of blocks for the maze
   /// should always try to keep it odd number
@@ -69,6 +69,13 @@ class GyroMazeGame extends FlameGame
     );
     add(
       Wall(
+        position: _startPosition + Vector2(_wallSize, -_wallSize),
+        size: _wallSize,
+        type: EntryExit.entry,
+      ),
+    );
+    add(
+      Wall(
         position: _startPosition + Vector2(2 * _wallSize, -_wallSize),
         size: _wallSize,
       ),
@@ -85,6 +92,14 @@ class GyroMazeGame extends FlameGame
         position: _startPosition +
             Vector2(_numOfBlocks * _wallSize, (_numOfBlocks - 2) * _wallSize),
         size: _wallSize,
+      ),
+    );
+    add(
+      Wall(
+        position: _startPosition +
+            Vector2(_numOfBlocks * _wallSize, (_numOfBlocks - 2) * _wallSize),
+        size: _wallSize,
+        type: EntryExit.exit,
       ),
     );
     add(
