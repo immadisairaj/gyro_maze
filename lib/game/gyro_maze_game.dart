@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:gyro_maze/game/ball.dart';
 import 'package:gyro_maze/game/wall.dart';
 import 'package:gyro_maze/utils/direction.dart';
@@ -11,7 +10,10 @@ import 'package:gyro_maze/utils/maze_generator.dart';
 
 /// main flame game widget
 class GyroMazeGame extends FlameGame
-    with SingleGameInstance, HasCollisionDetection, KeyboardEvents {
+    with
+        SingleGameInstance,
+        HasCollisionDetection,
+        HasKeyboardHandlerComponents {
   // @override
   // bool get debugMode => true;
 
@@ -123,37 +125,5 @@ class GyroMazeGame extends FlameGame
         }
       }
     }
-  }
-
-  @override
-  KeyEventResult onKeyEvent(
-    RawKeyEvent event,
-    Set<LogicalKeyboardKey> keysPressed,
-  ) {
-    final isKeyDown = event is RawKeyDownEvent;
-
-    Direction? keyDirection;
-    if (isKeyDown) {
-      if (event.logicalKey == LogicalKeyboardKey.arrowUp ||
-          event.logicalKey == LogicalKeyboardKey.keyW) {
-        keyDirection = Direction.up;
-      } else if (event.logicalKey == LogicalKeyboardKey.arrowDown ||
-          event.logicalKey == LogicalKeyboardKey.keyS) {
-        keyDirection = Direction.down;
-      } else if (event.logicalKey == LogicalKeyboardKey.arrowLeft ||
-          event.logicalKey == LogicalKeyboardKey.keyA) {
-        keyDirection = Direction.left;
-      } else if (event.logicalKey == LogicalKeyboardKey.arrowRight ||
-          event.logicalKey == LogicalKeyboardKey.keyD) {
-        keyDirection = Direction.right;
-      }
-    }
-
-    if (isKeyDown && keyDirection != null) {
-      ballDirection = keyDirection;
-      return KeyEventResult.handled;
-    }
-
-    return KeyEventResult.ignored;
   }
 }

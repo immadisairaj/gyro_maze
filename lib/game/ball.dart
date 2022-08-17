@@ -1,10 +1,13 @@
+import 'dart:math';
+
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flutter/services.dart';
 import 'package:gyro_maze/game/wall.dart';
 import 'package:gyro_maze/utils/direction.dart';
 
 /// ball component for the game
-class Ball extends SpriteComponent with CollisionCallbacks {
+class Ball extends SpriteComponent with CollisionCallbacks, KeyboardHandler {
   /// create a single ball component
   ///
   /// [size] is a required parameter
@@ -33,6 +36,7 @@ class Ball extends SpriteComponent with CollisionCallbacks {
 
   @override
   Future<void>? onLoad() async {
+    // debugMode = true;
     sprite = await Sprite.load('ball.png');
     await add(
       CircleHitbox(),
@@ -74,33 +78,81 @@ class Ball extends SpriteComponent with CollisionCallbacks {
   }
 
   @override
+  bool onKeyEvent(
+    RawKeyEvent event,
+    Set<LogicalKeyboardKey> keysPressed,
+  ) {
+    final isKeyDown = event is RawKeyDownEvent;
+
+    // TODO: fix when game controller is used and immediately key is used
+    Direction? keyDirection;
+    if (isKeyDown) {
+      if (event.logicalKey == LogicalKeyboardKey.arrowUp ||
+          event.logicalKey == LogicalKeyboardKey.keyW) {
+        keyDirection = Direction.up;
+      } else if (event.logicalKey == LogicalKeyboardKey.arrowDown ||
+          event.logicalKey == LogicalKeyboardKey.keyS) {
+        keyDirection = Direction.down;
+      } else if (event.logicalKey == LogicalKeyboardKey.arrowLeft ||
+          event.logicalKey == LogicalKeyboardKey.keyA) {
+        keyDirection = Direction.left;
+      } else if (event.logicalKey == LogicalKeyboardKey.arrowRight ||
+          event.logicalKey == LogicalKeyboardKey.keyD) {
+        keyDirection = Direction.right;
+      }
+    }
+
+    if (isKeyDown && keyDirection != null) {
+      direction = keyDirection;
+      return true;
+    }
+
+    return false;
+  }
+
+  @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollision(intersectionPoints, other);
     if (other is Wall) {
-      // TODO: fix the ball passing through the walls
-      final interT = (other.position - position) / 2;
-      final penX = other.size.x / 2 + size.x / 2 - interT.x.abs();
-      final penY = other.size.y / 2 + size.y / 2 - interT.y.abs();
-      if ((penY - penX).abs() > 2) {
-        if (penY <= penX) {
-          if (interT.y < 0) {
-            if (_hasCollidedUp) return;
-            _hasCollidedUp = true;
-            _hasCollidedDown = false;
-          } else {
-            if (_hasCollidedDown) return;
-            _hasCollidedDown = true;
-            _hasCollidedUp = false;
-          }
-        } else {
-          if (interT.x < 0) {
-            if (_hasCollidedLeft) return;
-            _hasCollidedLeft = true;
-            _hasCollidedRight = false;
-          } else {
-            if (_hasCollidedRight) return;
+      if (intersectionPoints.length == 2) {
+        final ballCenter = position + Vector2(size.x / 2, size.y / 2);
+        // generate a vector from the center of the ball to
+        // the avg of the intersection points.
+        final collisionNormal =
+            ((intersectionPoints.first + intersectionPoints.last) / 2) -
+                ballCenter;
+        final distance = collisionNormal.length;
+        // the half coverage of the collision towards the side.
+        // If collision falls under this, it is considered collided.
+        // Else, it is considered not collided.
+        const angleThresholdInDegrees = 46;
+        final collisionAngleInDegrees =
+            collisionNormal.screenAngle() / pi * 180;
+
+        if (distance <= size.x / 2) {
+          if (collisionNormal.x > 0 &&
+              collisionAngleInDegrees > (90 - angleThresholdInDegrees) &&
+              collisionAngleInDegrees < (90 + angleThresholdInDegrees)) {
             _hasCollidedRight = true;
             _hasCollidedLeft = false;
+          } else if (collisionNormal.x < 0 &&
+              collisionAngleInDegrees > (-90 - angleThresholdInDegrees) &&
+              collisionAngleInDegrees < (-90 + angleThresholdInDegrees)) {
+            _hasCollidedLeft = true;
+            _hasCollidedRight = false;
+          }
+          if (collisionNormal.y > 0 &&
+                  (collisionAngleInDegrees < (-180 + angleThresholdInDegrees) &&
+                      collisionAngleInDegrees >= -180) ||
+              collisionAngleInDegrees > (180 - angleThresholdInDegrees) &&
+                  collisionAngleInDegrees <= 180) {
+            _hasCollidedDown = true;
+            _hasCollidedUp = false;
+          } else if (collisionNormal.y < 0 &&
+              collisionAngleInDegrees > (0 - angleThresholdInDegrees) &&
+              collisionAngleInDegrees < (0 + angleThresholdInDegrees)) {
+            _hasCollidedUp = true;
+            _hasCollidedDown = false;
           }
         }
       }

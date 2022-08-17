@@ -76,6 +76,7 @@ class _GyroMazeState extends State<GyroMaze> {
                 ),
               ),
             ),
+            // TODO: adjust controller size based on the maze size
             Align(
               alignment: Alignment.bottomRight,
               child: AnimatedScale(
