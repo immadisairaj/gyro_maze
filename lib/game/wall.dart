@@ -34,21 +34,42 @@ class Wall extends SpriteComponent {
 
   @override
   Future<void>? onLoad() async {
-    final String imageToLoad;
-    switch (type) {
-      case EntryExit.entry:
-      case EntryExit.exit:
-        imageToLoad = 'arrow.png';
-        break;
-      case EntryExit.none:
-        imageToLoad = 'wall.png';
-        break;
-    }
-    sprite = await Sprite.load(imageToLoad);
-    if (type == EntryExit.exit) {
-      position += Vector2(0, size.y);
-      await add(RotateEffect.to(-pi / 2, EffectController(duration: 0)));
+    sprite = await Sprite.load('wall.png');
+    if (type != EntryExit.none) {
+      await add(_Arrow(size: size.x, type: type));
     }
     await add(RectangleHitbox());
+  }
+}
+
+class _Arrow extends SpriteComponent {
+  /// create a single arrow component
+  ///
+  /// - size is a required parameter
+  /// - type is to determine what type of wall it is
+  ///
+  /// asserts if the type is [EntryExit.none]
+  _Arrow({
+    required double size,
+    required this.type,
+  })  : assert(
+            type != EntryExit.none, 'type cannot be EntryExit.none for arrows'),
+        super(
+          size: Vector2.all(size),
+        );
+
+  /// type of the wall to determine if it is entry or exit wall or normal
+  final EntryExit type;
+
+  @override
+  Future<void>? onLoad() async {
+    if (type != EntryExit.none) {
+      sprite = await Sprite.load('arrow.png');
+      // rotate towards right if exit wall
+      if (type == EntryExit.exit) {
+        position += Vector2(0, size.y);
+        await add(RotateEffect.to(-pi / 2, EffectController(duration: 0)));
+      }
+    }
   }
 }
