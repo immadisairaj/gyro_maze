@@ -35,6 +35,9 @@ class GyroMazeGame extends FlameGame
 
   late Ball _ball;
 
+  /// reduce the ball size compared to wall size
+  double get _ballSize => _wallSize * 0.7;
+
   /// set or get ball direction
   Direction get ballDirection => _ball.direction;
   set ballDirection(Direction newDirection) => _ball.direction = newDirection;
@@ -42,14 +45,14 @@ class GyroMazeGame extends FlameGame
   @override
   Future<void>? onLoad() {
     // add ball
-    // TODO: make the speed of ball dynamic based on the maze size
     _ball = Ball(
       position: _startPosition +
           Vector2(
-            _wallSize * 1.1,
+            (3 * _wallSize - _ballSize) / 2,
             0,
           ),
-      size: _wallSize * 0.7,
+      size: _ballSize,
+      speed: _ballSize * 2.5,
     );
     add(_ball);
 
