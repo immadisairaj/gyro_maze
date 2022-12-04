@@ -104,10 +104,12 @@ class Ball extends SpriteComponent with CollisionCallbacks, KeyboardHandler {
 
     if (isKeyDown && keyDirection != null) {
       direction = keyDirection;
-      return true;
+      // returns false as the key handler is being handled
+      return false;
     }
 
-    return false;
+    // returns true as the key handler is not being handled
+    return true;
   }
 
   @override
