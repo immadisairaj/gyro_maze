@@ -20,12 +20,12 @@ enum EntryExit {
 class Wall extends SpriteComponent {
   /// create a single wall component
   ///
-  /// - size is a required parameter
-  /// - position is default to (0, 0)
-  /// - type is to determine what type of wall it is
+  /// - [size] is a required parameter
+  /// - [position] is default to (0, 0)
+  /// - [type] is to determine what type of wall it is
   Wall({
-    Vector2? position,
     required double size,
+    Vector2? position,
     this.type = EntryExit.none,
   }) : super(size: Vector2.all(size), position: position ?? Vector2.zero());
 
@@ -45,15 +45,17 @@ class Wall extends SpriteComponent {
 class _Arrow extends SpriteComponent {
   /// create a single arrow component
   ///
-  /// - size is a required parameter
-  /// - type is to determine what type of wall it is
+  /// - [size] is a required parameter
+  /// - [type] is to determine what type of wall it is
   ///
   /// asserts if the type is [EntryExit.none]
   _Arrow({
     required double size,
     required this.type,
   })  : assert(
-            type != EntryExit.none, 'type cannot be EntryExit.none for arrows'),
+          type != EntryExit.none,
+          'type cannot be EntryExit.none for arrows',
+        ),
         super(
           size: Vector2.all(size),
         );

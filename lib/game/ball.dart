@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/services.dart';
@@ -10,13 +8,13 @@ import 'package:gyro_maze/utils/direction.dart';
 class Ball extends SpriteComponent with CollisionCallbacks, KeyboardHandler {
   /// create a single ball component
   ///
-  /// [size] is a required parameter
-  /// [position] is default to (0, 0)
-  /// [speed] is default to 30
-  /// [direction] is default to [Direction.none]
+  /// - [size] is a required parameter
+  /// - [position] is default to (0, 0)
+  /// - [speed] is default to 30
+  /// - [direction] is default to [Direction.none]
   Ball({
-    Vector2? position,
     required double size,
+    Vector2? position,
     this.speed = 30,
     this.direction = Direction.none,
   }) : super(size: Vector2.all(size), position: position ?? Vector2.zero());
@@ -127,35 +125,29 @@ class Ball extends SpriteComponent with CollisionCallbacks, KeyboardHandler {
         // the half coverage of the collision towards the side.
         // If collision falls under this, it is considered collided.
         // Else, it is considered not collided.
-        const angleThresholdInDegrees = 46;
-        final collisionAngleInDegrees =
-            collisionNormal.screenAngle() / pi * 180;
+        const angleThresholdInDegrees = 46.0;
 
         if (distance <= size.x / 2) {
-          if (collisionNormal.x > 0 &&
-              collisionAngleInDegrees > (90 - angleThresholdInDegrees) &&
-              collisionAngleInDegrees < (90 + angleThresholdInDegrees)) {
-            _hasCollidedRight = true;
-            _hasCollidedLeft = false;
-          } else if (collisionNormal.x < 0 &&
-              collisionAngleInDegrees > (-90 - angleThresholdInDegrees) &&
-              collisionAngleInDegrees < (-90 + angleThresholdInDegrees)) {
-            _hasCollidedLeft = true;
-            _hasCollidedRight = false;
-          }
-          if (collisionNormal.y > 0 &&
-                  (collisionAngleInDegrees < (-180 + angleThresholdInDegrees) &&
-                      collisionAngleInDegrees >= -180) ||
-              collisionAngleInDegrees > (180 - angleThresholdInDegrees) &&
-                  collisionAngleInDegrees <= 180) {
-            _hasCollidedDown = true;
-            _hasCollidedUp = false;
-          } else if (collisionNormal.y < 0 &&
-              collisionAngleInDegrees > (0 - angleThresholdInDegrees) &&
-              collisionAngleInDegrees < (0 + angleThresholdInDegrees)) {
-            _hasCollidedUp = true;
-            _hasCollidedDown = false;
-          }
+          DirectionHelper.directionCallbackFromNormal(
+            normal: collisionNormal,
+            angleThreshold: angleThresholdInDegrees,
+            rightCallback: () {
+              _hasCollidedRight = true;
+              _hasCollidedLeft = false;
+            },
+            leftCallback: () {
+              _hasCollidedLeft = true;
+              _hasCollidedRight = false;
+            },
+            upCallback: () {
+              _hasCollidedUp = true;
+              _hasCollidedDown = false;
+            },
+            downCallback: () {
+              _hasCollidedDown = true;
+              _hasCollidedUp = false;
+            },
+          );
         }
       }
     }

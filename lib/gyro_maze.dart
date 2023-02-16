@@ -1,10 +1,13 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:arrow_pad/arrow_pad.dart';
 import 'package:flame/game.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gyro_maze/game/gyro_maze_game.dart';
 import 'package:gyro_maze/utils/direction.dart';
+import 'package:sensors_plus/sensors_plus.dart';
 
 /// main game for the application
 class GyroMaze extends StatefulWidget {
@@ -20,11 +23,51 @@ class _GyroMazeState extends State<GyroMaze> {
 
   late bool showController;
 
+  late StreamSubscription<AccelerometerEvent>? subscription;
+
+  late double rotationX = 0;
+  late double rotationY = 0;
+
   @override
   void initState() {
     super.initState();
     _game = GyroMazeGame();
     showController = false;
+
+    if (defaultTargetPlatform == TargetPlatform.android ||
+        defaultTargetPlatform == TargetPlatform.iOS) {
+      subscription = accelerometerEvents.listen(handleGyroAccel);
+    }
+    rotationX = 0;
+    rotationY = 0;
+  }
+
+  @override
+  void dispose() {
+    subscription?.cancel();
+    super.dispose();
+  }
+
+  void handleGyroAccel(AccelerometerEvent event) {
+    if (!showController) {
+      final dir = Vector2(-event.x, event.y);
+      if (dir.length > 1) {
+        dir.normalize();
+
+        // the half coverage of the collision towards the side.
+        // If collision falls under this, it is considered collided.
+        // Else, it is considered not collided.
+        DirectionHelper.directionCallbackFromNormal(
+          normal: dir,
+          downCallback: () => _game.ballDirection = Direction.down,
+          upCallback: () => _game.ballDirection = Direction.up,
+          leftCallback: () => _game.ballDirection = Direction.left,
+          rightCallback: () => _game.ballDirection = Direction.right,
+        );
+      } else {
+        _game.ballDirection = Direction.none;
+      }
+    }
   }
 
   @override
@@ -59,12 +102,14 @@ class _GyroMazeState extends State<GyroMaze> {
                           size: 16,
                         ),
                       ),
-                      Icon(
-                        showController
-                            ? Icons.hide_source_outlined
-                            : Icons.circle_outlined,
-                        color: Colors.white,
-                        size: 24,
+                      Center(
+                        child: Icon(
+                          showController
+                              ? Icons.hide_source_outlined
+                              : Icons.circle_outlined,
+                          color: Colors.white,
+                          size: 24,
+                        ),
                       ),
                     ],
                   ),
@@ -80,7 +125,7 @@ class _GyroMazeState extends State<GyroMaze> {
             Align(
               alignment: Alignment.bottomRight,
               child: AnimatedScale(
-                duration: const Duration(milliseconds: 500),
+                duration: const Duration(milliseconds: 200),
                 scale: showController ? 1 : 0,
                 child: Padding(
                   padding: const EdgeInsets.all(10),
@@ -91,6 +136,7 @@ class _GyroMazeState extends State<GyroMaze> {
                       innerColor: const Color.fromARGB(255, 54, 52, 52),
                       outerColor: const Color.fromARGB(55, 208, 187, 187),
                       iconColor: const Color.fromARGB(200, 224, 223, 223),
+                      clickTrigger: ClickTrigger.onTapUp,
                       onPressedUp: () => _game.ballDirection = Direction.up,
                       onPressedDown: () => _game.ballDirection = Direction.down,
                       onPressedLeft: () => _game.ballDirection = Direction.left,
