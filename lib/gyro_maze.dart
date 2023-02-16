@@ -18,7 +18,7 @@ class GyroMaze extends StatefulWidget {
   State<GyroMaze> createState() => _GyroMazeState();
 }
 
-class _GyroMazeState extends State<GyroMaze> {
+class _GyroMazeState extends State<GyroMaze> with WidgetsBindingObserver {
   late final GyroMazeGame _game;
 
   late bool showController;
@@ -31,6 +31,8 @@ class _GyroMazeState extends State<GyroMaze> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
+
     _game = GyroMazeGame();
     showController = false;
 
@@ -43,8 +45,22 @@ class _GyroMazeState extends State<GyroMaze> {
   }
 
   @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+
+    if (state == AppLifecycleState.resumed) {
+      // resume the engine when the app is back active
+      _game.resumeEngine();
+    } else {
+      // pause the engine when the app is inactive
+      _game.pauseEngine();
+    }
+  }
+
+  @override
   void dispose() {
     subscription?.cancel();
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
