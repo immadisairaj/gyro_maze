@@ -1,16 +1,19 @@
-# gyro_maze
+# Gyro Maze
 
-A new Flutter project.
+[![Powered by Flame](https://img.shields.io/badge/Powered%20by-%F0%9F%94%A5-orange.svg)](https://flame-engine.org)
+[![style: very good analysis](https://img.shields.io/badge/style-very_good_analysis-B22C89.svg)](https://pub.dev/packages/very_good_analysis)
+![GitHub](https://img.shields.io/github/license/immadisairaj/gyro_maze)
 
-## Getting Started
+A simple maze controlled with Gyro sensors of mobile
 
-This project is a starting point for a Flutter application.
+## Video Demo
 
-A few resources to get you started if this is your first Flutter project:
+https://user-images.githubusercontent.com/40348358/219405004-9a4cd569-a59e-43b3-9299-6405e9315548.MOV
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## About
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+This is a small free play game that is designed to play with gyro sensors of the device.
+
+There is no winner, There is no loser.
+
+Tested on: Android Mobile, macOS Desktop, Chrome Desktop
