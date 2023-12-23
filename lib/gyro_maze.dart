@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:gyro_maze/game/gyro_maze_game.dart';
 import 'package:gyro_maze/utils/direction.dart';
 import 'package:sensors_plus/sensors_plus.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 
 /// main game for the application
 class GyroMaze extends StatefulWidget {
@@ -55,6 +56,7 @@ class _GyroMazeState extends State<GyroMaze> with WidgetsBindingObserver {
   @override
   void dispose() {
     subscription?.cancel();
+    WakelockPlus.disable();
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
@@ -92,6 +94,10 @@ class _GyroMazeState extends State<GyroMaze> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
+    // enable wake lock as this is a game without touch and relies on
+    // screen to be awake
+    WakelockPlus.enable();
+
     final controllerSize = min(
       MediaQuery.of(context).size.height * 0.3,
       MediaQuery.of(context).size.width * 0.5,
