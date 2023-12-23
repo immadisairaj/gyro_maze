@@ -44,18 +44,6 @@ class GyroMazeGame extends FlameGame
 
   @override
   Future<void>? onLoad() {
-    // add ball
-    _ball = Ball(
-      position: _startPosition +
-          Vector2(
-            (3 * _wallSize - _ballSize) / 2,
-            0,
-          ),
-      size: _ballSize,
-      speed: _ballSize * 2.5,
-    );
-    add(_ball);
-
     // add walls around in and out
     add(
       Wall(
@@ -101,6 +89,18 @@ class GyroMazeGame extends FlameGame
 
     // genearte and add maze walls
     _addMaze();
+
+    // add ball at the last to ensure ball doesn't go out of maze
+    _ball = Ball(
+      position: _startPosition +
+          Vector2(
+            (3 * _wallSize - _ballSize) / 2,
+            0,
+          ),
+      size: _ballSize,
+      speed: _ballSize * 2.5,
+    );
+    add(_ball);
 
     return null;
   }

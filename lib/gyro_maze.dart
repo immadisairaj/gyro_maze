@@ -36,12 +36,7 @@ class _GyroMazeState extends State<GyroMaze> with WidgetsBindingObserver {
     _game = GyroMazeGame();
     showController = false;
 
-    if (defaultTargetPlatform == TargetPlatform.android ||
-        defaultTargetPlatform == TargetPlatform.iOS) {
-      subscription = accelerometerEvents.listen(handleGyroAccel);
-    }
-    rotationX = 0;
-    rotationY = 0;
+    initGyroAccelOvserver();
   }
 
   @override
@@ -64,8 +59,17 @@ class _GyroMazeState extends State<GyroMaze> with WidgetsBindingObserver {
     super.dispose();
   }
 
+  void initGyroAccelOvserver() {
+    if (defaultTargetPlatform == TargetPlatform.android ||
+        defaultTargetPlatform == TargetPlatform.iOS) {
+      subscription = accelerometerEventStream().listen(handleGyroAccel);
+    }
+    rotationX = 0;
+    rotationY = 0;
+  }
+
   void handleGyroAccel(AccelerometerEvent event) {
-    if (!showController) {
+    if (_game.isLoaded && !showController) {
       final dir = Vector2(-event.x, event.y);
       if (dir.length > 1) {
         dir.normalize();
@@ -104,40 +108,44 @@ class _GyroMazeState extends State<GyroMaze> with WidgetsBindingObserver {
             ),
             Align(
               alignment: Alignment.topRight,
-              child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: IconButton(
-                  tooltip:
-                      showController ? 'Hide Controller' : 'Show Controller',
-                  icon: Stack(
-                    children: [
-                      const Center(
-                        child: Icon(
-                          Icons.control_camera_outlined,
-                          color: Colors.white,
-                          size: 16,
+              child: FittedBox(
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: IconButton(
+                    tooltip:
+                        showController ? 'Hide Controller' : 'Show Controller',
+                    icon: Stack(
+                      children: [
+                        const Positioned.fill(
+                          child: Center(
+                            child: Icon(
+                              Icons.control_camera_outlined,
+                              color: Colors.white,
+                              size: 16,
+                            ),
+                          ),
                         ),
-                      ),
-                      Center(
-                        child: Icon(
-                          showController
-                              ? Icons.hide_source_outlined
-                              : Icons.circle_outlined,
-                          color: Colors.white,
-                          size: 24,
+                        Center(
+                          child: Icon(
+                            showController
+                                ? Icons.hide_source_outlined
+                                : Icons.circle_outlined,
+                            color: Colors.white,
+                            size: 24,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        showController = !showController;
+                      });
+                    },
                   ),
-                  onPressed: () {
-                    setState(() {
-                      showController = !showController;
-                    });
-                  },
                 ),
               ),
             ),
-            // TODO: adjust controller size based on the maze size
+            // TODO(immadisairaj): adjust controller size based on the maze size
             Align(
               alignment: Alignment.bottomRight,
               child: AnimatedScale(

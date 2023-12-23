@@ -82,7 +82,7 @@ class Ball extends SpriteComponent with CollisionCallbacks, KeyboardHandler {
   ) {
     final isKeyDown = event is RawKeyDownEvent;
 
-    // TODO: fix when game controller is used and immediately key is used
+    // TODO(immadisairaj): fix when game controller is used and immediately key is used
     Direction? keyDirection;
     if (isKeyDown) {
       if (event.logicalKey == LogicalKeyboardKey.arrowUp ||

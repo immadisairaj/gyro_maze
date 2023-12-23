@@ -31,7 +31,7 @@ class MazeGenerator {
     for (var i = 1; i < rows - 1; i += 2) {
       for (var j = 1; j < cols - 1; j += 2) {
         forest.add([
-          [i, j]
+          [i, j],
         ]);
         grid[i][j] = false;
       }

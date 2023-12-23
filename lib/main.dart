@@ -17,8 +17,9 @@ class MyApp extends StatelessWidget {
       // debugShowMaterialGrid: true,
       title: 'Gyro Maze',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.brown),
       ),
+      themeMode: ThemeMode.dark,
       home: const GyroMaze(),
     );
   }
