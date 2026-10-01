@@ -1,6 +1,5 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
-import 'package:flutter/services.dart';
 import 'package:gyro_maze/game/wall.dart';
 import 'package:gyro_maze/utils/direction.dart';
 
@@ -36,9 +35,7 @@ class Ball extends SpriteComponent with CollisionCallbacks, KeyboardHandler {
   Future<void>? onLoad() async {
     // debugMode = true;
     sprite = await Sprite.load('ball.png');
-    await add(
-      CircleHitbox(),
-    );
+    await add(CircleHitbox());
   }
 
   @override
@@ -54,61 +51,57 @@ class Ball extends SpriteComponent with CollisionCallbacks, KeyboardHandler {
         if (!_hasCollidedUp) {
           position += Vector2(0, -speed * dt);
         }
-        break;
       case Direction.down:
         if (!_hasCollidedDown) {
           position += Vector2(0, speed * dt);
         }
-        break;
       case Direction.left:
         if (!_hasCollidedLeft) {
           position += Vector2(-speed * dt, 0);
         }
-        break;
       case Direction.right:
         if (!_hasCollidedRight) {
           position += Vector2(speed * dt, 0);
         }
-        break;
       case Direction.none:
         break;
     }
   }
 
-  @override
-  bool onKeyEvent(
-    RawKeyEvent event,
-    Set<LogicalKeyboardKey> keysPressed,
-  ) {
-    final isKeyDown = event is RawKeyDownEvent;
+  // @override
+  // bool onKeyEvent(
+  //   RawKeyEvent event,
+  //   Set<LogicalKeyboardKey> keysPressed,
+  // ) {
+  //   final isKeyDown = event is RawKeyDownEvent;
 
-    // TODO(immadisairaj): fix when game controller is used and immediately key is used
-    Direction? keyDirection;
-    if (isKeyDown) {
-      if (event.logicalKey == LogicalKeyboardKey.arrowUp ||
-          event.logicalKey == LogicalKeyboardKey.keyW) {
-        keyDirection = Direction.up;
-      } else if (event.logicalKey == LogicalKeyboardKey.arrowDown ||
-          event.logicalKey == LogicalKeyboardKey.keyS) {
-        keyDirection = Direction.down;
-      } else if (event.logicalKey == LogicalKeyboardKey.arrowLeft ||
-          event.logicalKey == LogicalKeyboardKey.keyA) {
-        keyDirection = Direction.left;
-      } else if (event.logicalKey == LogicalKeyboardKey.arrowRight ||
-          event.logicalKey == LogicalKeyboardKey.keyD) {
-        keyDirection = Direction.right;
-      }
-    }
+  //   // TODO(immadisairaj): fix when game controller is used and immediately key is used
+  //   Direction? keyDirection;
+  //   if (isKeyDown) {
+  //     if (event.logicalKey == LogicalKeyboardKey.arrowUp ||
+  //         event.logicalKey == LogicalKeyboardKey.keyW) {
+  //       keyDirection = Direction.up;
+  //     } else if (event.logicalKey == LogicalKeyboardKey.arrowDown ||
+  //         event.logicalKey == LogicalKeyboardKey.keyS) {
+  //       keyDirection = Direction.down;
+  //     } else if (event.logicalKey == LogicalKeyboardKey.arrowLeft ||
+  //         event.logicalKey == LogicalKeyboardKey.keyA) {
+  //       keyDirection = Direction.left;
+  //     } else if (event.logicalKey == LogicalKeyboardKey.arrowRight ||
+  //         event.logicalKey == LogicalKeyboardKey.keyD) {
+  //       keyDirection = Direction.right;
+  //     }
+  //   }
 
-    if (isKeyDown && keyDirection != null) {
-      direction = keyDirection;
-      // returns false as the key handler is being handled
-      return false;
-    }
+  //   if (isKeyDown && keyDirection != null) {
+  //     direction = keyDirection;
+  //     // returns false as the key handler is being handled
+  //     return false;
+  //   }
 
-    // returns true as the key handler is not being handled
-    return true;
-  }
+  //   // returns true as the key handler is not being handled
+  //   return true;
+  // }
 
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
@@ -120,7 +113,7 @@ class Ball extends SpriteComponent with CollisionCallbacks, KeyboardHandler {
         // the avg of the intersection points.
         final collisionNormal =
             ((intersectionPoints.first + intersectionPoints.last) / 2) -
-                ballCenter;
+            ballCenter;
         final distance = collisionNormal.length;
         // the half coverage of the collision towards the side.
         // If collision falls under this, it is considered collided.

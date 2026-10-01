@@ -18,7 +18,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=3.2.0 <4.0.0"
+  sdk: ">=3.13.0 <4.0.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -28,12 +28,12 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   arrow_pad: ^0.2.0
-  cupertino_icons: ^1.0.6
-  flame: ^1.13.1
+  cupertino_icons: ^1.0.9
+  flame: ^1.38.2
   flutter:
     sdk: flutter
-  sensors_plus: ^4.0.2
-  wakelock_plus: ^1.1.4
+  sensors_plus: ^7.1.0
+  wakelock_plus: ^1.8.1
 
 dev_dependencies:
   flutter_test:

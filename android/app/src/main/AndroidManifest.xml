@@ -1,5 +1,4 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.immadisairaj.gyro_maze">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
    <application
         android:label="gyro_maze"
         android:name="${applicationName}"
