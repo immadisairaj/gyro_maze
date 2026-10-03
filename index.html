@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!--
+    If you are serving your web app in a path other than the root, change the
+    href value below to reflect the base path you are serving from, or pass
+    `--base-href /gyro_maze/` to `flutter build web`.
+  -->
+  <base href="/">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="Gyro Maze: tilt your phone to roll the ball through the maze.">
+
+  <!-- iOS home screen -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Gyro Maze">
+
+  <!-- Theme -->
+  <meta name="theme-color" content="#151413">
+  <meta name="color-scheme" content="dark">
+
+  <!-- Icons -->
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+
+  <!-- Link previews (Open Graph / Twitter). og:url and og:image must be
+       absolute URLs: change the host if the site is served elsewhere. -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Gyro Maze">
+  <meta property="og:title" content="Gyro Maze: tilt to roll, escape the maze">
+  <meta property="og:description" content="Tilt your phone to roll the ball through the maze. Play the free trial level in your browser.">
+  <meta property="og:url" content="https://immadisairaj.github.io/gyro_maze/">
+  <meta property="og:image" content="https://immadisairaj.github.io/gyro_maze/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Gyro Maze: a glass marble inside a wooden circular maze">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Gyro Maze: tilt to roll, escape the maze">
+  <meta name="twitter:description" content="Tilt your phone to roll the ball through the maze. Play the free trial level in your browser.">
+  <meta name="twitter:image" content="https://immadisairaj.github.io/gyro_maze/og-image.png">
+
+  <title>Gyro Maze</title>
+  <link rel="manifest" href="manifest.json">
+
+  <style>
+    /* no white flash while the engine loads */
+    html, body { margin: 0; height: 100%; background: #151413; }
+  </style>
+</head>
+<body>
+  <!-- flutter_soloud web audio -->
+  <script src="assets/packages/flutter_soloud/web/init_soloud.js" defer></script>
+  <!-- current Flutter web loader (replaces flutter.js + loadEntrypoint) -->
+  <script src="flutter_bootstrap.js" async></script>
+</body>
+</html>

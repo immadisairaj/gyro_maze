@@ -1,0 +1,302 @@
+{
+  "image": "atlas_core.png",
+  "tile": 128,
+  "pad": 2,
+  "cell": 132,
+  "columns": 8,
+  "sprites": {
+    "hole": 0,
+    "holeFallOverlay": 1,
+    "goal": {
+      "start": 2,
+      "frames": 8,
+      "stepTime": 0.09
+    },
+    "checkpointOff": 10,
+    "checkpointOn": 11,
+    "key": 12,
+    "doorClosed": 13,
+    "doorOpen": 14,
+    "oneWayGate": 15,
+    "switchUp": 16,
+    "switchDown": 17,
+    "boost": {
+      "start": 18,
+      "frames": 4,
+      "stepTime": 0.08
+    },
+    "ice": [
+      22,
+      23
+    ],
+    "sand": [
+      24,
+      25
+    ],
+    "arrow": 26,
+    "starFull": 28,
+    "starEmpty": 29,
+    "lock": 30,
+    "ballShadow": 31
+  },
+  "rects": {
+    "0": [
+      2,
+      2,
+      128,
+      128
+    ],
+    "1": [
+      134,
+      2,
+      128,
+      128
+    ],
+    "2": [
+      266,
+      2,
+      128,
+      128
+    ],
+    "3": [
+      398,
+      2,
+      128,
+      128
+    ],
+    "4": [
+      530,
+      2,
+      128,
+      128
+    ],
+    "5": [
+      662,
+      2,
+      128,
+      128
+    ],
+    "6": [
+      794,
+      2,
+      128,
+      128
+    ],
+    "7": [
+      926,
+      2,
+      128,
+      128
+    ],
+    "8": [
+      2,
+      134,
+      128,
+      128
+    ],
+    "9": [
+      134,
+      134,
+      128,
+      128
+    ],
+    "10": [
+      266,
+      134,
+      128,
+      128
+    ],
+    "11": [
+      398,
+      134,
+      128,
+      128
+    ],
+    "12": [
+      530,
+      134,
+      128,
+      128
+    ],
+    "13": [
+      662,
+      134,
+      128,
+      128
+    ],
+    "14": [
+      794,
+      134,
+      128,
+      128
+    ],
+    "15": [
+      926,
+      134,
+      128,
+      128
+    ],
+    "16": [
+      2,
+      266,
+      128,
+      128
+    ],
+    "17": [
+      134,
+      266,
+      128,
+      128
+    ],
+    "18": [
+      266,
+      266,
+      128,
+      128
+    ],
+    "19": [
+      398,
+      266,
+      128,
+      128
+    ],
+    "20": [
+      530,
+      266,
+      128,
+      128
+    ],
+    "21": [
+      662,
+      266,
+      128,
+      128
+    ],
+    "22": [
+      794,
+      266,
+      128,
+      128
+    ],
+    "23": [
+      926,
+      266,
+      128,
+      128
+    ],
+    "24": [
+      2,
+      398,
+      128,
+      128
+    ],
+    "25": [
+      134,
+      398,
+      128,
+      128
+    ],
+    "26": [
+      266,
+      398,
+      128,
+      128
+    ],
+    "27": [
+      398,
+      398,
+      128,
+      128
+    ],
+    "28": [
+      530,
+      398,
+      128,
+      128
+    ],
+    "29": [
+      662,
+      398,
+      128,
+      128
+    ],
+    "30": [
+      794,
+      398,
+      128,
+      128
+    ],
+    "31": [
+      926,
+      398,
+      128,
+      128
+    ]
+  },
+  "particles": {
+    "dust_0": [
+      398,
+      398,
+      32,
+      32
+    ],
+    "dust_1": [
+      430,
+      398,
+      32,
+      32
+    ],
+    "dust_2": [
+      462,
+      398,
+      32,
+      32
+    ],
+    "spark_0": [
+      398,
+      430,
+      32,
+      32
+    ],
+    "spark_1": [
+      430,
+      430,
+      32,
+      32
+    ],
+    "confetti_0": [
+      398,
+      462,
+      32,
+      32
+    ],
+    "confetti_1": [
+      430,
+      462,
+      32,
+      32
+    ],
+    "confetti_2": [
+      462,
+      462,
+      32,
+      32
+    ],
+    "confetti_3": [
+      494,
+      462,
+      32,
+      32
+    ]
+  },
+  "notes": {
+    "oneWayGate": "artwork points right (+x); rotate by direction",
+    "boost": "artwork points right (+x); rotate by direction",
+    "arrow": "artwork points down (+y); entry = as-is, exit = rotate -90deg",
+    "hole": "radius ~0.36 tile, transparent outside; draw on floor under the ball",
+    "holeFallOverlay": "draw over the ball with rising opacity while it sinks",
+    "ice": "alpha 0.88, draw over floor; tiles seamlessly",
+    "sand": "opaque; tiles seamlessly",
+    "particles": "absolute source rects inside the atlas (32 px)"
+  }
+}
